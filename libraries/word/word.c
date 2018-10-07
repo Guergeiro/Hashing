@@ -48,6 +48,44 @@ void print_word(struct word *data) {
 	printf("\nWord: %s\nRepetitions: %u", data->word, data->repetitions);
 }
 
+void print_nodes_ascending_order(struct word_node *node) {
+	print_word(node->data);
+	if (node->next) {
+		print_nodes_ascending_order(node->next);
+	}
+}
+
+void print_nodes_descending_order(struct word_node *node) {
+	if (node->next) {
+		print_nodes_descending_order(node->next);
+	}
+	print_word(node->data);
+}
+
+void insert_node(struct word_node *current, struct word_node *node) {
+	if (current->next) {
+		insert_node(current->next, node);
+	}
+	int result = compare_nodes(current, node);
+	if (result < 0) {
+		node->next = current->next;
+		current->next = node;
+	} else if (!result) {
+		current->data->repetitions++;
+		destruct_word_node(node);
+	}
+}
+
+struct word_node *search_node(struct word_node *current, struct word_node *node) {
+	int result = compare_nodes(current, node);
+	if (result < 0) {
+		return search_node(current->next, node);
+	} else if (!result) {
+		return current;
+	}
+	return NULL;
+}
+
 int compare_nodes(struct word_node *node1, struct word_node *node2) {
 	return stricmp(node1->data->word, node2->data->word);
 }

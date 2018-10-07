@@ -5,6 +5,8 @@
 
 #include "main.h"
 #include "../libraries/macros/macros.h"
+#include "../libraries/file/file.h"
+#include "../libraries/dictionary/dictionary.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,47 +18,40 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
-	//struct tree *tree = new_tree();
+	struct dictionary *dictionary = new_dictionary();
 	unsigned int op;
 	do {
 		op = menu();
 		CLEARSCR;
 		switch (op) {
 		case 1:
-			//insert_node_tree(tree, new_node(new_person()));
+			insert_node_dictionary(dictionary, new_node(new_word()));
 			break;
 		case 2:
-			//search_tree_node(tree, new_node(new_person()));
+			search_dictionary_node(dictionary, new_node(new_word()));
 			break;
 		case 3:
-			//print_tree_ascending_order(tree);
+			print_dictionary_ascending_order(dictionary);
 			PAUSE;
 			break;
 		case 4:
-			//print_tree_descending_order(tree);
+			print_dictionary_descending_order(dictionary);
 			PAUSE;
 			break;
 		case 5:
-			//printf("\nNumber of nodes: %u", number_of_nodes(tree));
+			printf("\nNumber of words: %u", number_of_words(dictionary));
 			PAUSE;
 			break;
 		case 6:
-			//invert_tree(tree);
+			import_file(dictionary, argv[1]);
 			break;
 		case 7:
-			//printf("\nTree height: %u", tree_height(tree));
-			PAUSE;
-			break;
-		case 8:
-			//import_file(tree, argv[1]);
-			break;
-		case 9:
-			//export_file(tree);
+			export_file(dictionary);
 			break;
 		}
 	} while (op != 0);
 
-	//destruct_tree(tree);
+	destruct_dictionary(dictionary);
 }
 
 int menu() {
