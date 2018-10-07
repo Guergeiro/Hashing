@@ -55,7 +55,7 @@ void insert_node_dictionary(struct dictionary *dictionary, struct word_node *nod
 		for (unsigned int i = 0; i < NLISTS - 1; i++) {
 			if (dictionary->array_list[i]->character == toupper(node->data->word[0])) {
 				insert_node_list(dictionary->array_list[i], node);
-				break;
+				return;
 			}
 		}
 		insert_node_list(dictionary->array_list[NLISTS - 1], node);
@@ -67,7 +67,8 @@ void search_dictionary_node(struct dictionary *dictionary, struct word_node *nod
 		for (unsigned int i = 0; i < NLISTS - 1; i++) {
 			if (dictionary->array_list[i]->character == toupper(node->data->word[0])) {
 				search_node_list(dictionary->array_list[i], node);
-				break;
+				destruct_word_node(node);
+				return;
 			}
 		}
 		search_node_list(dictionary->array_list[NLISTS - 1], node);
